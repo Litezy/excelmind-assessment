@@ -30,12 +30,14 @@ ExcelMind is an AI-enhanced educational web platform that allows students to enr
 
 ## 📂 Project Structure
 
+```bash
 excelmind-assessment/
-├── backend/ # Express backend with Prisma ORM
-├── frontend/ # React + Vite frontend
-├── docker-compose.yml # Docker orchestration file
-├── setup-env.sh # Script to generate .env files
-├── .env.example # Root-level sample env file
+├── backend/               # Express backend with Prisma ORM
+├── frontend/              # React + Vite frontend
+├── docker-compose.yml     # Docker orchestration file
+├── setup-env.sh           # Script to generate .env files
+├── .env.example           # Root-level sample env file
+
 
 
 ---
