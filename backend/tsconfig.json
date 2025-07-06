@@ -9,8 +9,8 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "typeRoots": ["src/types","src/types/express"],
+    "typeRoots": ["src/types", "src/types/express"]
   },
-  "include": ["src/**/*","src/types",],
+  "include": ["src/**/*", "src/types"],
   "exclude": ["node_modules"]
 }
