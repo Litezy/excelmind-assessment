@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import DashboardLayout from '../../layout/DashboardLayout';
 import { AuthGetApi, AuthPutApi } from '../../services/API';
 import { Apis } from '../../services/API';

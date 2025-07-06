@@ -8,7 +8,6 @@ import {
   Users,
   GraduationCap
 } from 'lucide-react';
-import React from 'react';
 import DashboardLayout from '../layout/DashboardLayout';
 import { useAtom } from 'jotai';
 import { PROFILE, DASHBOARDMETRICS, STUDENT_GRADES } from '../services/store';

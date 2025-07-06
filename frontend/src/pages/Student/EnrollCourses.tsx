@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import DashboardLayout from '../../layout/DashboardLayout'
 import { Apis, AuthGetApi, AuthPostApi } from '../../services/API';
 import { ErrorMessage, handleApiError, SuccessMessage } from '../../utils/pageUtils';
@@ -39,7 +39,7 @@ const EnrollCourses = () => {
             }
             const response = await AuthPostApi(Apis.courses.enroll_course, formdata)
             const data = await response.data;
-            if (data.status === 'success' || response.status === 200) {
+            if (data.status === 'success' || response.status === 201) {
                 fetchCourses(); // Refresh enrolled courses
                 await new Promise((res) => setTimeout(res, 2000))
                 SuccessMessage(response.message)

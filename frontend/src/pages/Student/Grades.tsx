@@ -1,5 +1,4 @@
 import { Upload } from 'lucide-react';
-import React from 'react';
 import DashboardLayout from '../../layout/DashboardLayout';
 import { useAtom } from 'jotai';
 import { STUDENT_GRADES, PROFILE } from '../../services/store';
@@ -105,7 +104,6 @@ const Grades = () => {
                 <thead>
                   <tr className="border-b border-gray-200">
                     <th className="text-left py-3 px-4 font-semibold text-gray-700">Course</th>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Submission</th>
                     <th className="text-left py-3 px-4 font-semibold text-gray-700">Grade</th>
                     <th className="text-left py-3 px-4 font-semibold text-gray-700">Date</th>
                     <th className="text-left py-3 px-4 font-semibold text-gray-700">Status</th>
@@ -116,9 +114,6 @@ const Grades = () => {
                     <tr key={index} className="border-b border-gray-100 hover:bg-gray-50">
                       <td className="py-4 px-4 truncate font-medium text-gray-900">
                         {grade.course?.title || 'Untitled Course'}
-                      </td>
-                      <td className="py-4 px-4 text-gray-600 truncate max-w-xs">
-                        {grade.submission?.slice(0, 60) || 'N/A'}
                       </td>
                       <td className="py-4 px-4">
                         <span

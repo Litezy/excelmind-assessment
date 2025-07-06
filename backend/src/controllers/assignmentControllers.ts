@@ -8,69 +8,72 @@ const prisma = new PrismaClient();
 
 
 export const submitAssignment = async (req: Request, res: Response): Promise<void> => {
-    try {
-        const user = req.user;
-        const { courseId, content } = req.body;
+  try {
+    const user = req.user;
+    const { courseId, content } = req.body;
 
-        if (!courseId) {
-            res.status(400).json({ message: 'courseId is required' });
-            return;
-        }
-
-        // Prevent double submissions
-        const existing = await prisma.assignment.findFirst({
-            where: { courseId, studentId: user.id },
-        });
-
-        if (existing) {
-            res.status(400).json({ message: 'You already submitted an assignment for this course.' });
-            return;
-        }
-
-        let submission: string | null = null;
-
-        // 1. If content text was provided
-        if (content) {
-            submission = content;
-        }
-        // 2. Else if file was uploaded
-        else if (req.files && req.files.file) {
-            const file = req.files.file as fileUpload.UploadedFile;
-
-            const result = await cloudinary.uploader.upload(file.tempFilePath, {
-                resource_type: 'raw',
-                folder: 'academic-crm/assignments',
-                public_id: `${Date.now()}-${file.name.replace(/\s+/g, '-').toLowerCase()}`
-            });
-
-            submission = result.secure_url;
-        }
-
-        // Neither content nor file
-        if (!submission) {
-            res.status(400).json({ message: 'Please submit either content text or upload a file.' });
-            return;
-        }
-
-        // Save submission
-        const saved = await prisma.assignment.create({
-            data: {
-                courseId,
-                studentId: user.id,
-                submission,
-            },
-        });
-
-        res.status(201).json({
-            status:201,
-            message: 'Assignment submitted',
-            data: saved,
-        });
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Assignment submission failed' });
+    if (!courseId) {
+      res.status(400).json({ message: 'courseId is required' });
+      return;
     }
+
+    // Prevent double submissions
+    const existing = await prisma.assignment.findFirst({
+      where: { courseId, studentId: user.id },
+    });
+
+    if (existing) {
+      res.status(400).json({ message: 'You already submitted an assignment for this course.' });
+      return;
+    }
+
+    let submission: string | null = null;
+
+    // 1. If content text was provided
+    if (content) {
+      submission = content;
+    }
+    // 2. Else if file was uploaded
+    else if (req.files && req.files.file) {
+      const file = req.files.file as fileUpload.UploadedFile;
+
+      const result = await cloudinary.uploader.upload(file.tempFilePath, {
+        resource_type: 'raw',
+        folder: 'academic-crm/assignments',
+        public_id: `${Date.now()}-${file.name.replace(/\s+/g, '-').toLowerCase()}`,
+        access_mode: 'public',
+        type: 'upload',  
+        overwrite: false
+      });
+
+      submission = result.secure_url;
+    }
+
+    // Neither content nor file
+    if (!submission) {
+      res.status(400).json({ message: 'Please submit either content text or upload a file.' });
+      return;
+    }
+
+    // Save submission
+    const saved = await prisma.assignment.create({
+      data: {
+        courseId,
+        studentId: user.id,
+        submission,
+      },
+    });
+
+    res.status(201).json({
+      status: 201,
+      message: 'Assignment submitted',
+      data: saved,
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Assignment submission failed' });
+  }
 };
 
 
@@ -114,7 +117,7 @@ export const gradeAssignment = async (req: Request, res: Response): Promise<void
     });
 
     res.status(200).json({
-      status:200,
+      status: 200,
       message: 'Assignment graded successfully',
       assignment: updatedAssignment,
     });
@@ -127,31 +130,31 @@ export const gradeAssignment = async (req: Request, res: Response): Promise<void
 
 
 export const getStudentAssignments = async (req: Request, res: Response): Promise<void> => {
-    try {
-        const studentId = req.params.studentId;
+  try {
+    const studentId = req.params.studentId;
 
-        if (!studentId) {
-            res.status(400).json({ message: 'studentId is required' });
-            return;
-        }
-
-        const assignments = await prisma.assignment.findMany({
-            where: { studentId },
-            include: {
-                course: {
-                    select: { id: true, title: true }
-                }
-            }
-        });
-
-        res.status(200).json({
-            message: 'Assignments fetched successfully',
-            data: assignments,
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Failed to fetch assignments' });
+    if (!studentId) {
+      res.status(400).json({ message: 'studentId is required' });
+      return;
     }
+
+    const assignments = await prisma.assignment.findMany({
+      where: { studentId },
+      include: {
+        course: {
+          select: { id: true, title: true }
+        }
+      }
+    });
+
+    res.status(200).json({
+      message: 'Assignments fetched successfully',
+      data: assignments,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to fetch assignments' });
+  }
 };
 
 
@@ -295,7 +298,7 @@ export const getGradedAssignmentsWithWeightedAverage = async (req: Request, res:
     res.status(200).json({
       message: 'Graded assignments fetched',
       data: gradedAssignments,
-      status:200,
+      status: 200,
       weightedAverage: Math.round(weightedAverage)
     });
 

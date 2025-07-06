@@ -1,5 +1,4 @@
 import { Edit, Plus, Trash2 } from 'lucide-react';
-import React from 'react'
 
  const AdminPage = () => {
     

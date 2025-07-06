@@ -5,7 +5,7 @@ import {
     ListChecks,
     BookOpenCheck
 } from 'lucide-react';
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import DashboardLayout from '../../layout/DashboardLayout';
 import { AuthPostApi } from '../../services/API';
 import { Apis } from '../../services/API';

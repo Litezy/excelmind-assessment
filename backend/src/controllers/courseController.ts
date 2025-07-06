@@ -139,7 +139,7 @@ export const enrollCourse = async (req: Request, res: Response): Promise<void> =
       where: {
         courseId,
         studentId: user.id,
-        status:'pending'
+        status: 'pending'
       }
     });
 
@@ -161,7 +161,7 @@ export const enrollCourse = async (req: Request, res: Response): Promise<void> =
     });
 
     res.status(201).json({
-      status: 'success',
+      status: 201,
       message: 'Course enrolled successfully, pending approval',
       data: enrollment
     });
@@ -211,6 +211,9 @@ export const uploadSyllabus = async (req: Request, res: Response): Promise<void>
       resource_type: 'auto',
       folder: 'academic-crm',
       public_id: `${Date.now()}-${file.name.replace(/\s+/g, '-').toLowerCase()}`,
+      access_mode: 'public',
+      type: 'upload', 
+      overwrite: false
     });
 
     const updatedCourse = await prisma.course.update({
@@ -322,7 +325,7 @@ export const dropCourse = async (req: Request, res: Response): Promise<void> => 
 
     const enrollment = await prisma.enrollment.findFirst({
       where: {
-        id:courseId,
+        id: courseId,
         studentId: user.id
       }
     });

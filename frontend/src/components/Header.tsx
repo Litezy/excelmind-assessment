@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import { Menu, X, Bell, User } from 'lucide-react';
-import React, { useState } from 'react';
-import { PROFILE } from '../services/store';
+import  { useEffect, useState } from 'react';
+import { isSidebarExpandedAtom, PROFILE } from '../services/store';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { CookieName } from '../utils/pageUtils';
@@ -18,6 +18,7 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false)
+  const isExpanded = useAtom(isSidebarExpandedAtom)
 
   const logout = () => {
     setLoading(true)
@@ -51,8 +52,11 @@ const Header = () => {
     }
   })();
 
+  useEffect(()=>{
+    console.log(isExpanded)
+  },[isExpanded])
   return (
-    <div className="bg-white shadow-sm border-b border-gray-200 px-6 py-[13.3px] relative z-50">
+    <div className="bg-white  border-b border-gray-200 px-6 py-[12px] relative z-50">
 
       {loading &&
         <ModalLayout modalclass={`${loading && 'h-screen overflow-hidden'} w-11/12 mx-auto`} setModal={setLoading}>
@@ -62,7 +66,7 @@ const Header = () => {
         </ModalLayout>
       }
       <div className="flex items-center justify-between">
-        <div>
+        <div className={`${!isExpanded[0] && 'pl-5'} `}>
           <h2 className="text-xl lg:text-2xl font-bold text-gray-900 capitalize">Hi {username}</h2>
           <p className="text-gray-600 text-sm mt-1">{message}</p>
         </div>

@@ -1,10 +1,9 @@
-## Architecture
 
-```mermaid
-graph TD
-    A[Frontend<br/>React + Vite] --> B[Backend<br/>Node.js + Express]
-    B --> C[(PostgreSQL<br/>Prisma)]
-    B --> D[Cloudinary<br/>Image Upload]
-    B --> E[OpenAI API<br/>AI Assistant]
-    
-    C -.->|Assignment, Course,<br/>User Data| B
+
+    ## 🛠️ Setup Environment Files
+
+To generate `.env` files in the backend and frontend directories, run the setup script:
+
+```bash
+chmod +x setup-env.sh
+./setup-env.sh

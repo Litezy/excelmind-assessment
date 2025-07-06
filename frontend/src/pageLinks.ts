@@ -3,7 +3,7 @@ import Courses from "./pages/Student/Courses";
 import Dashboard from "./pages/Dashboard";
 import EnrollCourses from "./pages/Student/EnrollCourses";
 import Grades from "./pages/Student/Grades";
-import Home from "./pages/Home";
+import Home from "./pages/GeneralPages/Home";
 import Login from "./pages/GeneralPages/Login";
 import Signup from "./pages/GeneralPages/Signup";
 import CreateCourses from "./pages/Lecturer/CreateCourses";

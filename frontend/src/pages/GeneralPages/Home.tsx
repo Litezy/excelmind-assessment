@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { Brain, Play, Award, ArrowRight, CheckCircle, Star, TrendingUp, Zap,  Menu, X } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Brain, Play, Award, ArrowRight, CheckCircle, Star, TrendingUp, Zap, Menu, X } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [statsAnimated, setStatsAnimated] = useState(false);
-  const [showSplash, setShowSplash] = useState(true);
-  const [splashProgress, setSplashProgress] = useState(0);
+  const [showSplash, setShowSplash] = useState(() => {
+    const hasShownSplash = sessionStorage.getItem('splashShown');
+    return !hasShownSplash;
+  });
+
 
   const testimonials = [
     {
@@ -42,19 +45,15 @@ const Home = () => {
 
   // Splash screen effect
   useEffect(() => {
-    const progressTimer = setInterval(() => {
-      setSplashProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(progressTimer);
-          setTimeout(() => setShowSplash(false), 800);
-          return 100;
-        }
-        return prev + 1.5;
-      });
-    }, 60);
+    if (!showSplash) return;
 
-    return () => clearInterval(progressTimer);
-  }, []);
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+      sessionStorage.setItem('splashShown', 'true');
+    }, 2000); // Show splash for 2 seconds
+
+    return () => clearTimeout(timer);
+  }, [showSplash]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -82,6 +81,8 @@ const Home = () => {
     return () => observer.disconnect();
   }, []);
 
+
+  const navigate = useNavigate()
   if (showSplash) {
     return (
       <div className="fixed inset-0 bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 z-50 flex items-center justify-center overflow-hidden">
@@ -135,52 +136,39 @@ const Home = () => {
           .animate-float-reverse { animation: float-reverse 7s ease-in-out infinite; }
           .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
         `}</style>
-        
+
         <div className="text-center relative z-10">
           {/* Animated Logo */}
           <div className="relative mb-12">
             <div className="w-32 h-32 mx-auto mb-8 relative">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-3xl animate-pulse opacity-30"></div>
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-3xl flex items-center justify-center transform rotate-12 animate-spin-slow opacity-60">
-                <Brain className="w-16 h-16 text-white" />
+                <Brain className="w-12 h-12 text-white" />
               </div>
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl flex items-center justify-center animate-pulse-glow">
-                <Brain className="w-16 h-16 text-white" />
+                <Brain className="w-12 h-12 text-white" />
               </div>
             </div>
-            
+
             {/* Animated Brand Name */}
-            <h1 className="text-6xl font-bold text-white mb-6 animate-fade-in-up">
+            <h1 className="text-2xl lg:text-6xl font-bold text-white mb-6 animate-fade-in-up">
               ExcelMind
             </h1>
-            <p className="text-2xl text-blue-200 animate-fade-in-up-delay">
+            <p className="text-lg lg:text-2xl text-blue-200 animate-fade-in-up-delay">
               AI-Powered Excel Learning
             </p>
           </div>
-          
-          {/* Loading Progress */}
-          <div className="w-96 mx-auto">
-            <div className="bg-white/20 backdrop-blur-sm rounded-full h-3 mb-6 overflow-hidden">
-              <div 
-                className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 h-full rounded-full transition-all duration-300 ease-out relative"
-                style={{ width: `${splashProgress}%` }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse"></div>
-              </div>
-            </div>
-            <div className="text-blue-200 text-lg font-medium">
-              Loading your learning experience... {Math.round(splashProgress)}%
-            </div>
-          </div>
-          
+
+
+
           {/* Animated Dots */}
-          <div className="flex justify-center space-x-3 mt-10">
+          {/* <div className="flex justify-center space-x-3 mt-10">
             <div className="w-4 h-4 bg-blue-400 rounded-full animate-bounce"></div>
             <div className="w-4 h-4 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
             <div className="w-4 h-4 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-          </div>
+          </div> */}
         </div>
-        
+
         {/* Background Animation */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-600/20 to-indigo-600/20 rounded-full animate-float"></div>
@@ -193,7 +181,7 @@ const Home = () => {
     );
   }
 
-  
+
 
   return (
     <div className="min-h-screen bg-white">
@@ -207,19 +195,19 @@ const Home = () => {
               </div>
               <span className="text-2xl font-bold text-gray-900">ExcelMind</span>
             </div>
-            
+
             <nav className="hidden md:flex items-center space-x-8">
               <a href="#courses" className="text-gray-600 hover:text-blue-600 font-medium transition-colors">Courses</a>
               <a href="#features" className="text-gray-600 hover:text-blue-600 font-medium transition-colors">Features</a>
               <a href="#testimonials" className="text-gray-600 hover:text-blue-600 font-medium transition-colors">Reviews</a>
               <a href="#pricing" className="text-gray-600 hover:text-blue-600 font-medium transition-colors">Pricing</a>
               <Link to={`/signup`}
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-2 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 transform hover:scale-105">
+                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-2 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 transform hover:scale-105">
                 Start Learning
               </Link>
             </nav>
 
-            <button 
+            <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden"
             >
@@ -252,21 +240,23 @@ const Home = () => {
               <Zap className="w-4 h-4 mr-2" />
               AI-Powered Excel Learning Platform
             </div>
-            
+
             <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
               Master Excel with
               <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent block">
                 AI-Powered Learning
               </span>
             </h1>
-            
+
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Transform from Excel beginner to data expert with personalized AI tutoring, 
+              Transform from Excel beginner to data expert with personalized AI tutoring,
               real-world projects, and industry-recognized certification.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-12">
-              <button className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 transform hover:scale-105 shadow-lg">
+              <button
+                onClick={() => navigate('/login')}
+                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-blue-700 cursor-pointer hover:to-indigo-700 transition-all duration-200 transform hover:scale-105 shadow-lg">
                 Start Free Trial
               </button>
               <button className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors">
@@ -276,7 +266,7 @@ const Home = () => {
                 <span className="font-medium">Watch Demo</span>
               </button>
             </div>
-            
+
             <div className="flex items-center justify-center space-x-6 text-sm text-gray-600">
               <div className="flex items-center space-x-2">
                 <CheckCircle className="w-4 h-4 text-green-500" />
@@ -301,9 +291,8 @@ const Home = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
-                <div className={`text-4xl md:text-5xl font-bold text-white mb-2 transition-all duration-1000 ${
-                  statsAnimated ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-4'
-                }`} style={{ transitionDelay: `${index * 200}ms` }}>
+                <div className={`text-4xl md:text-5xl font-bold text-white mb-2 transition-all duration-1000 ${statsAnimated ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-4'
+                  }`} style={{ transitionDelay: `${index * 200}ms` }}>
                   {stat.number}
                 </div>
                 <div className="text-gray-400">{stat.label}</div>
@@ -322,7 +311,7 @@ const Home = () => {
               Our AI-powered platform adapts to your learning style, making Excel mastery faster and more engaging than ever.
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-3 gap-12">
             <div className="text-center group">
               <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -333,7 +322,7 @@ const Home = () => {
                 Get personalized explanations, instant feedback, and adaptive learning paths tailored to your skill level and goals.
               </p>
             </div>
-            
+
             <div className="text-center group">
               <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
                 <TrendingUp className="w-10 h-10 text-white" />
@@ -343,7 +332,7 @@ const Home = () => {
                 Practice with actual business scenarios from finance, marketing, and data analysis to build portfolio-ready skills.
               </p>
             </div>
-            
+
             <div className="text-center group">
               <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
                 <Award className="w-10 h-10 text-white" />
@@ -364,7 +353,7 @@ const Home = () => {
             <h2 className="text-4xl font-bold text-gray-900 mb-4">What Our Students Say</h2>
             <p className="text-xl text-gray-600">Join thousands of professionals who've transformed their careers</p>
           </div>
-          
+
           <div className="bg-white rounded-2xl p-8 md:p-12 shadow-xl max-w-4xl mx-auto">
             <div className="text-center">
               <div className="flex justify-center mb-6">
@@ -372,11 +361,11 @@ const Home = () => {
                   <Star key={i} className="w-6 h-6 text-yellow-400 fill-current" />
                 ))}
               </div>
-              
+
               <blockquote className="text-2xl text-gray-900 mb-8 leading-relaxed">
                 "{testimonials[currentTestimonial].text}"
               </blockquote>
-              
+
               <div className="flex items-center justify-center space-x-4">
                 <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center">
                   <span className="text-white font-bold text-xl">
@@ -388,15 +377,14 @@ const Home = () => {
                   <p className="text-gray-600">{testimonials[currentTestimonial].role} at {testimonials[currentTestimonial].company}</p>
                 </div>
               </div>
-              
+
               <div className="flex justify-center mt-8 space-x-2">
                 {testimonials.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentTestimonial(index)}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                      index === currentTestimonial ? 'bg-blue-600' : 'bg-gray-300'
-                    }`}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentTestimonial ? 'bg-blue-600' : 'bg-gray-300'
+                      }`}
                   />
                 ))}
               </div>
@@ -414,9 +402,11 @@ const Home = () => {
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
             Join over 50,000 professionals who've already advanced their careers with ExcelMind.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <button className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 shadow-lg">
+            <button
+              onClick={() => navigate('/login')}
+              className="bg-white cursor-pointer text-blue-600 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 shadow-lg">
               Start Free Trial
             </button>
             <button className="flex items-center space-x-2 text-white hover:text-blue-200 transition-colors">
@@ -424,8 +414,8 @@ const Home = () => {
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>
-          
-          <div className="mt-8 flex items-center justify-center space-x-6 text-sm text-blue-100">
+
+          <div className="mt-8 cursor-pointer flex items-center justify-center space-x-6 text-sm text-blue-100">
             <div className="flex items-center space-x-2">
               <CheckCircle className="w-4 h-4" />
               <span>7-day free trial</span>
@@ -453,7 +443,7 @@ const Home = () => {
                 Empowering professionals with AI-powered Excel mastery.
               </p>
             </div>
-            
+
             <div>
               <h4 className="font-semibold mb-4">Courses</h4>
               <div className="space-y-2 text-gray-400">
@@ -463,7 +453,7 @@ const Home = () => {
                 <p>VBA Programming</p>
               </div>
             </div>
-            
+
             <div>
               <h4 className="font-semibold mb-4">Support</h4>
               <div className="space-y-2 text-gray-400">
@@ -473,7 +463,7 @@ const Home = () => {
                 <p>Status</p>
               </div>
             </div>
-            
+
             <div>
               <h4 className="font-semibold mb-4">Company</h4>
               <div className="space-y-2 text-gray-400">
@@ -484,10 +474,12 @@ const Home = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
             <p>&copy; 2025 ExcelMind. All rights reserved.</p>
+            <p className="mt-2">Built with ❤️ from Litezy</p>
           </div>
+
         </div>
       </footer>
     </div>
