@@ -83,7 +83,7 @@ const Signup = () => {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-4">
+    <div className="lg:min-h-screen py-5  bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center lg:py-4 px-4">
 
       {loading &&
         <ModalLayout modalclass={`${loading && 'h-screen overflow-hidden'} w-11/12 mx-auto`} setModal={setLoading}>
@@ -167,12 +167,20 @@ const Signup = () => {
           </div>
         </form>
 
-        <div className="mt-8 text-center flex items-center gap-2">
+        <div className="mt-8 w-full text-center ">
           <p className="text-sm text-gray-600">
             Already have an account?
             <span
               onClick={() => navigate("/login")}
               className="text-blue-600 cursor-pointer hover:text-blue-700 font-medium ml-1">Sign in</span>
+          </p>
+        </div>
+        <div className="mt-3 w-full text-center ">
+          <p className="text-sm text-gray-600">
+            Go back
+            <span
+              onClick={() => navigate("/")}
+              className="text-blue-600 cursor-pointer hover:text-blue-700 font-medium ml-1">Home</span>
           </p>
         </div>
       </div>

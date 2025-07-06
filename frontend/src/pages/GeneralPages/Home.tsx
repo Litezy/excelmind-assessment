@@ -14,21 +14,21 @@ const Home = () => {
 
   const testimonials = [
     {
-      name: "Sarah Johnson",
+      name: "Joy Tommy",
       role: "Data Analyst",
       company: "Microsoft",
       text: "ExcelMind transformed my Excel skills from basic to expert in just 3 months. The AI assistant is like having a personal tutor 24/7.",
       rating: 5
     },
     {
-      name: "Michael Chen",
+      name: "Michael Afolabi",
       role: "Financial Manager",
       company: "Goldman Sachs",
       text: "The VBA course was incredible. I went from knowing nothing about programming to automating complex financial models.",
       rating: 5
     },
     {
-      name: "Emma Rodriguez",
+      name: "Abdul Basit ",
       role: "Business Analyst",
       company: "Deloitte",
       text: "The real-world projects and personalized feedback helped me land my dream job. Best investment I've ever made!",
@@ -225,7 +225,9 @@ const Home = () => {
             <a href="#features" className="text-gray-600 hover:text-blue-600 font-medium">Features</a>
             <a href="#testimonials" className="text-gray-600 hover:text-blue-600 font-medium">Reviews</a>
             <a href="#pricing" className="text-gray-600 hover:text-blue-600 font-medium">Pricing</a>
-            <button className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-3 rounded-lg">
+            <button 
+            onClick={()=> navigate('/signup')}
+            className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-3 rounded-lg">
               Start Learning
             </button>
           </div>
@@ -267,7 +269,7 @@ const Home = () => {
               </button>
             </div>
 
-            <div className="flex items-center justify-center space-x-6 text-sm text-gray-600">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 w-full space-x-6 text-sm text-gray-600">
               <div className="flex items-center space-x-2">
                 <CheckCircle className="w-4 h-4 text-green-500" />
                 <span>Free 7-day trial</span>

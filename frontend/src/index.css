@@ -18,7 +18,9 @@ body{
   margin: 0;
   box-sizing: border-box;
 }
-
+button{
+  cursor: pointer;
+}
 @font-face {
   font-family: 'Product Sans';
   src: url('/src/fonts/ProductSans-Regular.ttf') format('truetype');

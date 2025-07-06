@@ -34,7 +34,7 @@ const Login = () => {
             email: form.email,
             password: form.password
         }
-        
+
         setLoading(true)
         try {
             const response = await PostApi(Apis.auth.login, formdata)
@@ -57,10 +57,10 @@ const Login = () => {
     }
     const navigate = useNavigate()
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-4">
+        <div className="lg:min-h-screen py-5 lg:py-4 bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center px-4">
 
             {loading &&
-                <ModalLayout modalclass={`${loading && 'h-screen overflow-hidden' } w-11/12 mx-auto`} setModal={setLoading}>
+                <ModalLayout modalclass={`${loading && 'h-screen overflow-hidden'} w-11/12 mx-auto`} setModal={setLoading}>
                     <div className=""><Loader /></div>
                 </ModalLayout>
             }
@@ -135,6 +135,14 @@ const Login = () => {
                         <span
                             onClick={() => navigate('/signup')}
                             className="cursor-pointer text-blue-600 hover:text-blue-700 font-medium ml-1">Sign up</span>
+                    </p>
+                </div>
+                <div className="mt-3 w-full text-center ">
+                    <p className="text-sm text-gray-600">
+                        Go back
+                        <span
+                            onClick={() => navigate("/")}
+                            className="text-blue-600 cursor-pointer hover:text-blue-700 font-medium ml-1">Home</span>
                     </p>
                 </div>
             </div>
