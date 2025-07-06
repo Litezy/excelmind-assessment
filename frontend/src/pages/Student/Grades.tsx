@@ -80,7 +80,7 @@ const Grades = () => {
   return (
     <DashboardLayout>
       <div className="p-6 space-y-6">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 w-full">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-gray-900">My Grades</h2>
             {gradeList.length > 0 && (
@@ -89,7 +89,7 @@ const Grades = () => {
                 className="flex items-center cursor-pointer space-x-2 bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition"
               >
                 <Upload className="w-4 h-4" />
-                <span>Export Transcript</span>
+                <span className="text-xs">Export Transcript</span>
               </button>
             )}
           </div>
@@ -99,52 +99,51 @@ const Grades = () => {
               No grades found or assignments not yet graded.
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Course</th>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Grade</th>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Date</th>
-                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {gradeList.map((grade, index) => (
-                    <tr key={index} className="border-b border-gray-100 hover:bg-gray-50">
-                      <td className="py-4 px-4 truncate font-medium text-gray-900">
-                        {grade.course?.title || 'Untitled Course'}
-                      </td>
-                      <td className="py-4 px-4">
-                        <span
-                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${grade.grade >= 90
-                              ? 'bg-green-100 text-green-800'
-                              : grade.grade >= 80
-                                ? 'bg-blue-100 text-blue-800'
-                                : grade.grade >= 70
-                                  ? 'bg-yellow-100 text-yellow-800'
-                                  : 'bg-red-100 text-red-800'
-                            }`}
-                        >
-                          {grade.grade}%
-                        </span>
-                      </td>
-                      <td className="py-4 truncate px-4 text-gray-600">
-                        {moment(grade.updatedAt).format('MMM D, YYYY')}
-                      </td>
-                      <td className="py-4 px-4">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                          Graded
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {gradeList.map((grade, index) => (
+                <div
+                  key={index}
+                  className="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm"
+                >
+                  <h3
+                    className="text-sm font-semibold text-gray-800 truncate"
+                    title={grade.course?.title || 'Untitled Course'}
+                  >
+                    {grade.course?.title || 'Untitled Course'}
+                  </h3>
+
+                  <div className="mt-2 text-sm text-gray-600">
+                    <span className="font-medium">Grade:</span>{' '}
+                    <span
+                      className={`font-semibold ${grade.grade >= 90
+                          ? 'text-green-600'
+                          : grade.grade >= 80
+                            ? 'text-blue-600'
+                            : grade.grade >= 70
+                              ? 'text-yellow-600'
+                              : 'text-red-600'
+                        }`}
+                    >
+                      {grade.grade}%
+                    </span>
+                  </div>
+
+                  <div className="mt-1 text-sm text-gray-600">
+                    <span className="font-medium">Date:</span>{' '}
+                    {moment(grade.updatedAt).format('MMM D, YYYY')}
+                  </div>
+
+                  <div className="mt-2 text-xs inline-flex px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-medium">
+                    Graded
+                  </div>
+                </div>
+              ))}
             </div>
           )}
         </div>
       </div>
+
+
     </DashboardLayout>
   );
 };

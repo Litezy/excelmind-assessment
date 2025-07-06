@@ -7,6 +7,7 @@ import { Apis, PostApi } from '../../services/API';
 import Cookies from 'js-cookie'
 import { decodeToken } from 'react-jwt'
 import ModalLayout from '../../shared/ModalLayout';
+import Loader from '../../components/Loader';
 
 
 interface formprops {
@@ -86,10 +87,8 @@ const Signup = () => {
     <div className="lg:min-h-screen py-5  bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center lg:py-4 px-4">
 
       {loading &&
-        <ModalLayout modalclass={`${loading && 'h-screen overflow-hidden'} w-11/12 mx-auto`} setModal={setLoading}>
-          <div className="p-6 flex items-center h-full justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-          </div>
+        <ModalLayout modalclass={`w-11/12 mx-auto`} setModal={setLoading}>
+          <div className=""><Loader /></div>
         </ModalLayout>
       }
       <div className="bg-white rounded-2xl shadow-2xl p-4 w-full max-w-xl border border-gray-100">
@@ -131,7 +130,7 @@ const Signup = () => {
                 onClick={() => setShowPassword((prev) => !prev)}
                 className="absolute right-3 top-3 text-gray-400 hover:text-gray-600 transition-colors"
               >
-                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                {showPassword ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
               </button>
             </div>
           </div>
@@ -151,7 +150,7 @@ const Signup = () => {
                 onClick={() => setShowConfirmPassword((prev) => !prev)}
                 className="absolute right-3 top-3 text-gray-400 hover:text-gray-600 transition-colors"
               >
-                {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                {showConfirmPassword ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
               </button>
             </div>
           </div>

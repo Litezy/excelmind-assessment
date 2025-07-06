@@ -48,22 +48,23 @@ const DashboardLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     if (user?.role === 'student') fetchStudentGrades();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="min-h-screen z-40 bg-gray-50 flex">
       <SideBar />
       <div className="flex-1 flex flex-col">
-        <div className={`fixed right-0 ${isExpanded ? 'lg:w-[81.1%]' : 'lg:w-[95.5%]'} w-full`}>
+        <div className={`fixed right-0 top-0 ${isExpanded ? 'lg:w-[81.1%]' : 'lg:w-[95.5%]'} w-full`}>
           <Header />
         </div>
-        <main
-          className={`flex-1 transition-all duration-300 ${
-            isExpanded ? 'lg:ml-[15rem]' : 'lg:ml-[5rem]'
-          } mt-[5rem] lg:mt-[5rem] overflow-y-auto`}
+        <div
+          className={`flex-1   transition-all duration-300 ${
+            isExpanded ? 'ml-0 lg:ml-[17rem]' : 'lg:ml-[5rem] ml-0'
+          } mt-[5rem] lg:mt-[5rem] overflow-y-auto overflow-x-hidden`}
         >
           {children}
-        </main>
+        </div>
       </div>
     </div>
   );

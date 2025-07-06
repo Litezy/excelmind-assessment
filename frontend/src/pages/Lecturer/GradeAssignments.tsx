@@ -24,7 +24,7 @@ const GradeAssignments = () => {
     const [assignments, setAssignments] = useState<Assignment[]>([]);
     const [loading, setLoading] = useState(false);
     const [modal, setModal] = useState(false);
-    const [selected, setSelected] = useState<Assignment | null>(null); 
+    const [selected, setSelected] = useState<Assignment | null>(null);
     const [submit, setSubmit] = useState(false)
     const [grading, setGrading] = useState<{ [key: string]: number }>({});
 
@@ -84,13 +84,13 @@ const GradeAssignments = () => {
         <DashboardLayout>
             <div className="p-6 space-y-6">
 
-                {modal && (
+                {modal && selected && (
                     <ModalLayout modalclass="max-w-2xl mx-auto" setModal={setModal}>
-                        <div className="p-6 space-y-4 w-full bg-white rounded-md ">
+                        <div className="p-6 space-y-4 w-full bg-white rounded-md">
                             <h2 className="text-lg font-semibold text-gray-800">Submission Preview</h2>
                             <div className="text-sm text-gray-600">
-                                <p><span className="font-medium text-gray-800">Student:</span> {selected?.student?.email}</p>
-                                <p><span className="font-medium text-gray-800">Course:</span> {selected?.course?.title}</p>
+                                <p><span className="font-medium text-gray-800">Student:</span> {selected.student.email}</p>
+                                <p><span className="font-medium text-gray-800">Course:</span> {selected.course.title}</p>
                             </div>
                             <div className="mt-4 p-4 bg-gray-100 border rounded-md max-h-96 overflow-y-auto whitespace-pre-wrap text-sm text-gray-800">
                                 {selected?.submission || 'No submission text available.'}
@@ -114,6 +114,7 @@ const GradeAssignments = () => {
                         </div>
                     </ModalLayout>
                 )}
+
                 <h2 className="text-xl font-semibold text-gray-800">Grade Assignments</h2>
 
                 {loading ? (
@@ -121,77 +122,68 @@ const GradeAssignments = () => {
                 ) : assignments.length === 0 ? (
                     <p className="text-gray-600">No submitted assignments yet.</p>
                 ) : (
-                    <div className="overflow-auto">
-                        <table className="min-w-full bg-white rounded-md shadow-sm">
-                            <thead className="bg-gray-100 text-left text-sm font-medium text-gray-600">
-                                <tr>
-                                    <th className="px-4 py-3">Student Email</th>
-                                    <th className="px-4 py-3">Course</th>
-                                    <th className="px-4 py-3">Submission</th>
-                                    <th className="px-4 py-3">Grade</th>
-                                    <th className="px-4 py-3">Status</th>
-                                    <th className="px-4 py-3">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody className="text-sm text-gray-700">
-                                {assignments.map((assignment: any) => (
-                                    <tr
-                                        onClick={() => {
-                                            if (assignment?.submission && !assignment.submission.startsWith('http')) {
-                                                openModal(assignment);
-                                            }
-                                        }}
-                                        key={assignment.id} className="border-t cursor-pointer border-gray-200">
-                                        <td className="px-4 py-3">{assignment.student.email}</td>
-                                        <td className="px-4 py-3">{assignment.course.title}</td>
-                                        <td className="px-4 py-3">
-                                            {assignment.submission?.startsWith('http') ? (
-                                                <a
-                                                    href={assignment.submission}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="text-blue-600 underline"
-                                                >
-                                                    View Submission
-                                                </a>
-                                            ) : (
-                                                <span>{assignment.submission.slice(0, 25)}... <span className='text-xs text-blue-500'>click to view texts</span></span>
-                                            )}
-                                        </td>
-                                        <td className="px-4 py-3">
-                                            {assignment.status === 'graded' ? (
-                                                <span className="text-green-700 font-semibold">{assignment.grade}</span>
-                                            ) : (
-                                                <input
-                                                    type="number"
-                                                    placeholder="Enter grade"
-                                                    className="border px-2 py-1 w-20 rounded"
-                                                    value={grading[assignment.id] || ''}
-                                                    onChange={e =>
-                                                        setGrading({ ...grading, [assignment.id]: parseInt(e.target.value) })
-                                                    }
-                                                />
-                                            )}
-                                        </td>
-                                        <td className="px-4 py-3 capitalize">{assignment.status}</td>
-                                        <td className="px-4 py-3">
-                                            {assignment.status !== 'graded' && (
-                                                <button
-                                                    onClick={() => handleGradeSubmit(assignment.id)}
-                                                    className="bg-blue-600 truncate text-white px-3 py-1.5 cursor-pointer rounded hover:bg-blue-700"
-                                                >
-                                                    Submit Grade
-                                                </button>
-                                            )}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {assignments.map((assignment) => (
+                            <div
+                                key={assignment.id}
+                                className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition p-5 space-y-4"
+                            >
+                                <div>
+                                    <h3 className="text-lg font-semibold text-gray-800">{assignment.course.title}</h3>
+                                    <p className="text-sm text-gray-500">Student: {assignment.student.email}</p>
+                                    <p className="text-sm text-gray-500">Status: <span className="capitalize">{assignment.status}</span></p>
+                                </div>
+
+                                <div className="text-sm">
+                                    {assignment.submission?.startsWith('http') ? (
+                                        <a
+                                            href={assignment.submission}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-blue-600 underline text-sm"
+                                        >
+                                            View Submission
+                                        </a>
+                                    ) : (
+                                        <button
+                                            onClick={() => openModal(assignment)}
+                                            className="text-blue-600 underline text-sm"
+                                        >
+                                            Preview Submission Text
+                                        </button>
+                                    )}
+                                </div>
+
+                                <div>
+                                    {assignment.status === 'graded' ? (
+                                        <p className="text-green-700 font-semibold text-sm">Grade: {assignment.grade}</p>
+                                    ) : (
+                                        <div className="flex items-center gap-3">
+                                            <input
+                                                type="number"
+                                                placeholder="Enter grade"
+                                                className="border px-3 py-1 w-24 rounded text-sm"
+                                                value={grading[assignment.id] || ''}
+                                                onChange={(e) =>
+                                                    setGrading({ ...grading, [assignment.id]: parseInt(e.target.value) })
+                                                }
+                                            />
+                                            <button
+                                                onClick={() => handleGradeSubmit(assignment.id)}
+                                                className="bg-blue-600 text-white px-3 py-1.5 rounded hover:bg-blue-700 text-sm"
+                                            >
+                                                Submit
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 )}
             </div>
         </DashboardLayout>
+
     );
 };
 

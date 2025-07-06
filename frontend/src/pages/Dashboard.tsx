@@ -4,7 +4,6 @@ import {
   BookOpen,
   Calendar,
   CheckCircle,
-  Clock,
   Users,
   GraduationCap
 } from 'lucide-react';
@@ -41,22 +40,15 @@ const Dashboard = () => {
   const [metrics] = useAtom(DASHBOARDMETRICS);
   const [grades] = useAtom(STUDENT_GRADES)
 
-  const mockCourses = [
-    { id: 1, title: 'Excel Fundamentals', instructor: 'Dr. Sarah Johnson' },
-    { id: 2, title: 'Advanced Data Analysis', instructor: 'Prof. Mike Chen' },
-    { id: 3, title: 'VBA Programming', instructor: 'Ms. Lisa Davis' },
-    { id: 4, title: 'Power BI Integration', instructor: 'Dr. John Smith' }
-  ];
+  
 
-  const studyHours = 42;
-  const teachingHours = 55;
 
   const totalCourses =
     metrics && isLecturerMetrics(metrics)
       ? metrics.totalCourses
       : metrics && isStudentMetrics(metrics)
         ? metrics.totalEnrolledCourses
-        : mockCourses.length;
+        : 0;
 
   const secondMetric =
     metrics && isLecturerMetrics(metrics)
@@ -70,7 +62,7 @@ const Dashboard = () => {
       ? metrics.totalSubmissions
       : metrics && isStudentMetrics(metrics)
         ? `${grades.weightedAverage}%`
-        : '90%';
+        : '0%';
 
 
   return (
@@ -148,7 +140,7 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-6 rounded-xl text-white">
+            {/* <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-6 rounded-xl text-white">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-orange-100 text-sm">
@@ -160,7 +152,7 @@ const Dashboard = () => {
                 </div>
                 <Clock className="w-8 h-8 text-orange-200" />
               </div>
-            </div>
+            </div> */}
           </div>
         )}
 

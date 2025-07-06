@@ -12,10 +12,12 @@ import Settings from "./pages/Admin/Settings";
 import ManageEnrolls from "./pages/Admin/ManageEnrolls";
 import Assignments from "./pages/Student/Assignments";
 import GradeAssignments from "./pages/Lecturer/GradeAssignments";
+import ErrorPage from "./pages/GeneralPages/ErrorPage";
 
 
 
 export const GeneralPages = [
+    { path: '*', component: ErrorPage },
     { path: '/', component: Home },
     { path: '/login', component: Login },
     { path: '/signup', component: Signup }

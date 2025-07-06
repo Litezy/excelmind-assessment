@@ -14,7 +14,7 @@ const Settings = () => {
     const fetchData = async () => {
         try {
             const res = await AuthGetApi(Apis.admin.fetch_courses_and_lecturers)
-            if (res.status === 200) {
+            if (res.status === 'success') {
                 const data = res.data
                 setCourses(data.courses)
                 setLecturers(data.lecturers)

@@ -86,7 +86,7 @@ const ManageEnrolls = () => {
 
     return (
         <DashboardLayout>
-            <div className="p-6 space-y-6">
+            <div className="p-3 space-y-5">
 
                 {loading &&
                     <ModalLayout modalclass={`${loading && 'h-screen overflow-hidden'} w-11/12 mx-auto`} setModal={setLoading}>
@@ -132,25 +132,26 @@ const ManageEnrolls = () => {
                 ) : enrollments.length === 0 ? (
                     <p className="text-gray-600">No pending enrollments.</p>
                 ) : (
-                    <div className="overflow-auto">
+                    <div className="x-10 max-w-full">
                         <table className="min-w-full bg-white rounded-md shadow-sm">
-                            <thead className="bg-gray-100 text-left text-sm font-medium text-gray-600">
+                            <thead className="bg-gray-100 text-sm text-left  font-medium text-gray-600">
                                 <tr>
-                                    <th className="px-4 py-3">Student Email</th>
-                                    <th className="px-4 py-3">Course Title</th>
-                                    <th className="px-4 py-3">Lecturer Email</th>
-                                    <th className="px-4 py-3">Status</th>
+                                    <th className="px-4 py-3">Student </th>
+                                    <th className="px-4 py-3">Course</th>
+                                    <th className="px-4 py-3 lg:table-cell hidden">Lecturer Email</th>
+                                    <th className="px-4 py-3 lg:table-cell hidden ">Status</th>
                                     <th className="px-4 py-3">Approve</th>
                                     <th className="px-4 py-3">Reject</th>
                                 </tr>
                             </thead>
                             <tbody className="text-sm text-gray-700">
                                 {enrollments.map((enroll) => (
-                                    <tr key={enroll.id} className="border-t border-gray-200">
-                                        <td className="px-4 py-3">{enroll.student.email}</td>
-                                        <td className="px-4 py-3">{enroll.course.title}</td>
-                                        <td className="px-4 py-3">{enroll.course.lecturer.email}</td>
-                                        <td className="px-4 py-3 capitalize">{enroll.status}</td>
+                                    <tr key={enroll.id} className="border-t text-sm border-gray-200">
+                                        <td className="px-4 lg:hidden py-3">{enroll.student.email.slice(0,5)}...{enroll.student.email.slice(-10)}</td>
+                                        <td className="px-4 lg:block hidden py-3">{enroll.student.email}</td>
+                                        <td className="px-4 py-3 truncate">{enroll.course.title}</td>
+                                        <td className="px-4 py-3 lg:table-cell hidden  ">{enroll.course.lecturer.email}</td>
+                                        <td className="px-4 py-3 lg:table-cell hidden capitalize">{enroll.status}</td>
                                         <td className="px-4 py-3 space-x-2">
                                             <button
                                                 className="bg-green-600  cursor-pointer truncate py-2 px-3 rounded-md hover:bg-green-700 text-white"

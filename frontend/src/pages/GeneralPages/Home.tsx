@@ -269,7 +269,7 @@ const Home = () => {
               </button>
             </div>
 
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 w-full space-x-6 text-sm text-gray-600">
+            <div className="grid grid-cols-2 items-center lg:grid-cols-3 gap-5 w-full space-x-6 text-sm text-gray-600">
               <div className="flex items-center space-x-2">
                 <CheckCircle className="w-4 h-4 text-green-500" />
                 <span>Free 7-day trial</span>
@@ -294,7 +294,7 @@ const Home = () => {
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
                 <div className={`text-4xl md:text-5xl font-bold text-white mb-2 transition-all duration-1000 ${statsAnimated ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-4'
-                  }`} style={{ transitionDelay: `${index * 200}ms` }}>
+                  }`}>
                   {stat.number}
                 </div>
                 <div className="text-gray-400">{stat.label}</div>

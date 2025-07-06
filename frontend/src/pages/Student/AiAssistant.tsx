@@ -1,6 +1,5 @@
 import {
     Brain,
-    MessageSquare,
     User,
     ListChecks,
     BookOpenCheck
@@ -64,10 +63,10 @@ const AiAssistant = () => {
 
     return (
         <DashboardLayout>
-            <div className="p-6 space-y-6">
+            <div className="p-3 space-y-3 ">
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     {/* Header */}
-                    <div className="flex items-center space-x-3 mb-6">
+                    <div className="flex space-y-3 lg:items-center flex-col lg:flex-row space-x-3 mb-6">
                         <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
                             <Brain className="w-6 h-6 text-white" />
                         </div>
@@ -143,9 +142,9 @@ const AiAssistant = () => {
                         <button
                             onClick={handleSend}
                             disabled={loading}
-                            className="bg-gradient-to-r cursor-pointer from-purple-600 to-pink-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-200 flex items-center space-x-2"
+                            className="bg-gradient-to-r cursor-pointer from-purple-600 to-pink-600 text-white px-4 py-2 rounded-lg hover:from-purple-700 text-sm hover:to-pink-700 transition-all duration-200 flex items-center space-x-2"
                         >
-                            <MessageSquare className="w-4 h-4" />
+                            {/* <MessageSquare className="w-4 h-4" /> */}
                             <span>{loading ? 'Sending...' : 'Send'}</span>
                         </button>
                     </div>

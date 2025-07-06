@@ -15,6 +15,7 @@ ExcelMind is an AI-enhanced educational web platform that allows students to enr
 - AI assistant for syllabus and course suggestions (Mocked)
 - Fully Dockerized setup (Frontend + Backend + PostgreSQL)
 - Cloudinary for file uploads
+- Some dummy data to showcase recent activities and deadlines in Students dashboard
 
 ---
 
