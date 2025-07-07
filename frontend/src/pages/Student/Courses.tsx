@@ -177,7 +177,7 @@ const Courses = () => {
 
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-500">
-                        Enrolled: {moment(course?.course?.updatedAt).format(`DD/MM/YYYY hh:mm a`)}
+                        Created: {moment(course?.course?.createdAt).format(`DD/MM/YYYY hh:mm a`)}
                       </span>
                       {course?.status === 'approved' && (
                         <button
