@@ -71,6 +71,8 @@ npm run dev
 #To spin up PostgreSQL, backend, and frontend together:
 docker-compose up --build
 
+liveurl
+https://excelmind-assessment.vercel.app/
 
 ---
 
