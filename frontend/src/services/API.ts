@@ -97,7 +97,7 @@ export const AuthPostApi = async <T = any>(endpoint: string, data: any): Promise
     return response.data;
 };
 
-// Authenticated POST
+// Authenticated PUT
 export const AuthPutApi = async <T = any>(endpoint: string, data: any): Promise<T> => {
     const token = Cookies.get(CookieName);
     const response = await axios.put(`${BASEURL}/${endpoint}`, data, {

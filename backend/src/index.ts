@@ -23,7 +23,7 @@ app.use(cors({
 
     // List of allowed origins
     const allowedOrigins = [
-      /^http:\/\/localhost:(5173|5174|5175|3000)$/, // Localhost ports including Docker
+      /^http:\/\/localhost:(5173|5174|5175|3001)$/, // Localhost ports including Docker
       /\.vercel\.app$/, // Any Vercel app domain
     ];
 
