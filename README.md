@@ -70,7 +70,7 @@ npm run dev
 
 #To spin up PostgreSQL, backend, and frontend together:
 docker-compose up --build
-navigate localhost:3001 to view frontend
+navigate localhost:3001 to view frontend(for docker)
 
 liveurl
 https://excelmind-assessment.vercel.app/
