@@ -25,6 +25,7 @@ app.use(cors({
     const allowedOrigins = [
       /^http:\/\/localhost:(5173|5174|5175|3001)$/, // Localhost ports including Docker
       /\.vercel\.app$/, // Any Vercel app domain
+      `https://excelmind-assessment.vercel.app`, 
     ];
 
     // Check if origin matches any allowed pattern
