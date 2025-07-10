@@ -26,6 +26,7 @@ const AuthGuard: React.FC<React.PropsWithChildren> = ({ children }) => {
             const token = Cookies.get(CookieName);
 
             if (!token || isExpired(token)) {
+                ErrorMessage('Session expired. Please log in again.');
                 return navigate('/login');
             }
             const decoded: any = decodeToken<DecodedToken>(token);
@@ -42,6 +43,8 @@ const AuthGuard: React.FC<React.PropsWithChildren> = ({ children }) => {
                 setProfile(response.data);
                 setLogin(true);
             } else {
+                ErrorMessage('Authentication failed. Please log in again.');
+                Cookies.remove(CookieName);
                 navigate('/login');
             }
         } catch (error: any) {
